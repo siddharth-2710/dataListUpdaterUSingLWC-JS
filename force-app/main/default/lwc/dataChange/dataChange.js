@@ -52,17 +52,20 @@ export default class DataChanger extends LightningElement {
     }
 
     handleSave(){
-        saveContactRoles({jSONData:(JSON.stringify(this.toUpdateContactRoles)),dataSize:this.toUpdateContactRoles.length,oppId:this.recordId})
-        .then((result)=>{
-            this.dispatchEvent(new ShowToastEvent({
+        if(this.toUpdateContactRoles.length>0){
+            saveContactRoles({jSONData:(JSON.stringify(this.toUpdateContactRoles)),dataSize:this.toUpdateContactRoles.length,oppId:this.recordId})
+            .then((result)=>{
+                this.dispatchEvent(new ShowToastEvent({
                 title: 'Role Updated Succesfully',
                 message: `The contact roles for Opportunity ${this.recordId} has been updated successfully`,
                 variant: 'success'
             }));
-            this.showButton = true;
-        })
-        .catch((error)=>{
-            console.error(error);
-        })
+                this.showButton = true;
+                this.toUpdateContactRoles = [];
+            })
+            .catch((error)=>{
+                console.error(error);
+            })
+        }
     }
 }
