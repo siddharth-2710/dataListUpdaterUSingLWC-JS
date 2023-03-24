@@ -48,7 +48,6 @@ export default class DataChanger extends LightningElement {
         contactRole.recordid = event.target.dataset.recordid;
         contactRole.role = event.target.value;
         this.toUpdateContactRoles.push(contactRole);
-        console.log(this.toUpdateContactRoles[0]);
     }
 
     handleSave(){
