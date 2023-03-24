@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Edit Contact Roles for this Opportunity">
+        <template if:true={showButton}>
+            <lightning-button label="Assign Roles" variant="brand" onclick={showContactRoleData} slot="actions"></lightning-button>
+        </template>
+        <template if:false={showButton}>
+            <div style="height:2px;width:100%;background-color:black"></div>
+            <template for:each={contactRolesData} for:item="contactRole">
+                <lightning-layout key={contactRole.Id} class="slds-m-top_large slds-align_absolute-center">
+                    <lightning-layout-item size="4" class="slds-m-bottom_small slds-m-left_x-small">
+                        <span class="slds-text-heading_small">{contactRole.Contact.Name}</span>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="4">
+                        <lightning-combobox name="Role" variant="label-hidden" value={contactRole.Role} options={options} onchange={handleChange} data-recordid={contactRole.Id}></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <div style="height:2px;width:100%;background-color:black" class="slds-m-top_large"></div>
+            <lightning-button label="Save" class="slds-align_absolute-center slds-m-top_large" variant="brand" onclick={handleSave}></lightning-button>
+        </template>
+    </lightning-card>
+</template>
