@@ -3,6 +3,7 @@ import getContactRoles from '@salesforce/apex/DataRetriver.getContactRoles';
 import getDivisionPicklistValues from '@salesforce/apex/DataRetriver.getDivisionPicklistValues';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import saveContactRoles from '@salesforce/apex/DataRetriver.saveContactRoles';
+import { RefreshEvent } from 'lightning/refresh';
 export default class DataChanger extends LightningElement {
     @api recordId;
     showButton = true;
@@ -61,6 +62,7 @@ export default class DataChanger extends LightningElement {
             }));
                 this.showButton = true;
                 this.toUpdateContactRoles = [];
+                this.dispatchEvent(new RefreshEvent());
             })
             .catch((error)=>{
                 console.error(error);
