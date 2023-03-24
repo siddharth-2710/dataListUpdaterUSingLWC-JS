@@ -31,11 +31,13 @@ public with sharing class DataRetriver {
             List<ContactRoleWrapper> conRoleList = new List<ContactRoleWrapper>();
             conRoleList = (List<ContactRoleWrapper>) JSON.deserialize(jSONData,List<ContactRoleWrapper>.class); 
             OpportunityContactRole oppContactRole = new OpportunityContactRole();
+            Set<Id> duplicateChecker = new Set<Id>();
             for(Integer i=0;i<dataSize;i++){
                 oppContactRole = contactRoleRecordsMap.get(conRoleList[i].recordid);
-                if(!(oppContactRole.role==conRoleList[i].role)){
+                if(!(oppContactRole.role==conRoleList[i].role) && (!duplicateChecker.contains(conRoleList[i].recordid))){
                     oppContactRole.role = conRoleList[i].role;
                     toUpdateContactRoles.add(oppContactRole);
+                    duplicateChecker.add(conRoleList[i].recordid);
                 }
             }
             update as user toUpdateContactRoles;
