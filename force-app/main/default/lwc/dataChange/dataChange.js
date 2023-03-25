@@ -68,7 +68,7 @@ export default class DataChanger extends LightningElement {
                     }
                 });
                 this.toUpdateContactRoles = [];
-                //eval("$A.get('e.fore:refreshView').fire();"); Not working
+                //eval("$A.get('e.force:refreshView').fire();"); Not working
                 //* this.dispatchEvent(new RefreshEvent()); Should work but currently in BETA now
                 notifyRecordUpdateAvailable(updatedRecordIds); //Don't know why it is not working
             })
