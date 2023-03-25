@@ -4,6 +4,7 @@ import getDivisionPicklistValues from '@salesforce/apex/DataRetriver.getDivision
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import saveContactRoles from '@salesforce/apex/DataRetriver.saveContactRoles';
 import { RefreshEvent } from 'lightning/refresh';
+import {notifyRecordUpdateAvailable} from 'lightning/uiRecordApi';
 export default class DataChanger extends LightningElement {
     @api recordId;
     showButton = true;
@@ -61,8 +62,15 @@ export default class DataChanger extends LightningElement {
                 variant: 'success'
             }));
                 this.showButton = true;
+                const updatedRecordIds = this.toUpdateContactRoles.map((row)=>{
+                    return {
+                        'recordId':row.recordid
+                    }
+                });
                 this.toUpdateContactRoles = [];
-                this.dispatchEvent(new RefreshEvent());
+                //eval("$A.get('e.fore:refreshView').fire();"); Not working
+                //* this.dispatchEvent(new RefreshEvent()); Should work but currently in BETA now
+                notifyRecordUpdateAvailable(updatedRecordIds); //Don't know why it is not working
             })
             .catch((error)=>{
                 console.error(error);
